@@ -33,10 +33,17 @@ void oneNode::init ()
 
 void oneNode::chatterCallback(const nav_msgs::Odometry::ConstPtr& msg)
 {
+
 	try
 	{
-        //listener.waitForTransform("/map", "/base_link", ros::Time::now(), ros::Duration(1.0));
+                //listener.waitForTransform("/map", "/base_link", ros::Time::now(), ros::Duration(1.0));
+                //listener.waitForTransform("/map", "/base_link", msg->header.stamp, ros::Duration(2.0));
+		listener.waitForTransform("/map", "/base_link", ros::Time(0), ros::Duration(2.0));
+
 		listener.lookupTransform("/map", "/base_link", ros::Time(0), this->transform);
+                //listener.lookupTransform("/map", "/base_link", ros::Time::now(), this->transform);
+                //listener.lookupTransform("/map", "/base_link", msg->header.stamp, this->transform);
+
 	}
 	catch (tf::TransformException ex)
 	{
