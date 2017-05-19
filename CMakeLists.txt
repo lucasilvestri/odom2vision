@@ -9,6 +9,7 @@ project(odom2vision)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
+  sensor_msgs
   mavros
   nav_msgs
   roscpp
