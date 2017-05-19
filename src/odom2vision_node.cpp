@@ -43,6 +43,7 @@ void oneNode::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 		//read orientation
 		this->quat = msg->orientation;
 		this->initialized = false;
+		std::cout << __func__ << std::endl << this->quat << std::endl;
 	}
 
 	static tf::TransformBroadcaster br;
@@ -51,9 +52,10 @@ void oneNode::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 	tf::Quaternion q; 
 	//q.setRPY(0, 0, 0);
 	tf::quaternionMsgToTF(this->quat, q);
-	transform.setRotation(q);
-	br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world2", "map2")); 
-	ROS_INFO("tf");
+	q = q.normalized();
+	//transform.setRotation(q); std::cout << __func__ << std::endl << this->quat << std::endl;
+	br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "map")); 
+	//br.sendTransform(tf::StampedTransform(transform, ros::Time(0), "world", "map")); 
 }
 
 void oneNode::chatterCallback(const nav_msgs::Odometry::ConstPtr& msg)
